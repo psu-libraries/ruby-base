@@ -22,4 +22,4 @@ jobs:
         password: ${{ secrets.DOCKER_TOKEN }}
         registry: docker.pkg.github.com
         tags: "${{ matrix.ruby }}-node-${{ matrix.node }}"
-        buildargs: RUBY_VERSION
+        buildargs: RUBY_VERSION,NODE_MAJOR
