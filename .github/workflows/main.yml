@@ -17,9 +17,9 @@ jobs:
         RUBY_VERSION: ${{ matrix.ruby }}
         NODE_MAJOR: ${{ matrix.node }}
       with:
-        name: psu-libraries/ruby-base/ruby
+        name: psul/ruby
         username: ${{ secrets.DOCKER_USER }}
         password: ${{ secrets.DOCKER_TOKEN }}
-        registry: docker.pkg.github.com
+        # registry: docker.pkg.github.com
         tags: "${{ matrix.ruby }}-node-${{ matrix.node }}"
         buildargs: RUBY_VERSION,NODE_MAJOR
