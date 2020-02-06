@@ -6,8 +6,8 @@ jobs:
   build:
     strategy:
       matrix:
-        # node: [10, 12]
-        ruby: [2.6.3]
+        node: [10, 12]
+        ruby: [2.6.3, 2.6.4, 2.6.5]
     runs-on: ubuntu-latest
 
     steps:
@@ -15,10 +15,11 @@ jobs:
     - uses: elgohr/Publish-Docker-Github-Action@master
       env:
         RUBY_VERSION: ${{ matrix.ruby }}
+        NODE_MAJOR: ${{ matrix.node }}
       with:
         name: psu-libraries/ruby-base/ruby
         username: ${{ secrets.DOCKER_USER }}
         password: ${{ secrets.DOCKER_TOKEN }}
         registry: docker.pkg.github.com
-        tags: "${{ matrix.ruby }}"
+        tags: "${{ matrix.ruby }}-node-${{ matrix.node }}"
         buildargs: RUBY_VERSION
