@@ -6,7 +6,7 @@ jobs:
   build:
     strategy:
       matrix:
-        node: [10, 11]
+        # node: [10, 12]
         ruby: [2.6.3]
     runs-on: ubuntu-latest
 
@@ -17,3 +17,5 @@ jobs:
       run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_TOKEN }} docker.pkg.github.com
     - name: Build
       run: docker buildx build --build-arg RUBY_VERSION=${{ matrix.ruby }} -t docker.pkg.github.com/psu-libraries/ruby-base:${{ matrix.ruby }} .
+    - name: Push
+      run: docker push docker.pkg.github.com/psu-libraries/ruby-base:${{ matrix.ruby }}
