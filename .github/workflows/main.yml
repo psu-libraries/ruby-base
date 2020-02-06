@@ -1,4 +1,4 @@
-name: CI
+name: Publish
 
 on: [push]
 
@@ -16,4 +16,4 @@ jobs:
     - name: Login
       run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_TOKEN }} docker.pkg.github.com
     - name: Build
-      run: docker buildx build --build-arg RUBY_VERSION=${{ matrix.ruby_version }} -t docker.pkg.github.com/psu-libraries/ruby-base:${{ matrix.ruby_version }} .
+      run: docker buildx build --build-arg RUBY_VERSION=${{ matrix.ruby }} -t docker.pkg.github.com/psu-libraries/ruby-base:${{ matrix.ruby }} .
