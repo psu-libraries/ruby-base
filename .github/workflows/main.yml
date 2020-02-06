@@ -16,7 +16,7 @@ jobs:
       env:
         RUBY_VERSION: ${{ matrix.ruby }}
       with:
-        name: ruby-base/ruby
+        name: psu-libraries/ruby-base/ruby
         username: ${{ secrets.DOCKER_USER }}
         password: ${{ secrets.DOCKER_TOKEN }}
         registry: docker.pkg.github.com
