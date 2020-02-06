@@ -10,7 +10,7 @@ ARG YARN_VERSION=1.19.1
 ARG BUNDLER_VERSION=2.0.2
 
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends curl unzip && \
+    apt-get install -y --no-install-recommends curl wget unzip && \
     rm -rf /var/lib/apt/lists*
 
 RUN curl -sL https://deb.nodesource.com/setup_$NODE_MAJOR.x | bash -
