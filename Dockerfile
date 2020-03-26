@@ -27,7 +27,7 @@ RUN apt-get update && \
     git make pkg-config libxslt-dev libxml2-dev g++ libpq-dev libghc-zlib-dev zlib1g-dev &&  \
     rm -rf /var/lib/apt/lists*
 
-RUN curl -Lo /tmp/envconsul.zip https://releases.hashicorp.com/envconsul/0.9.0/envconsul_0.9.0_linux_amd64.zip && \
+RUN curl -Lo /tmp/envconsul.zip https://releases.hashicorp.com/envconsul/0.9.2/envconsul_0.9.2_linux_amd64.zip && \
     unzip /tmp/envconsul.zip -d /bin && \
     rm /tmp/envconsul.zip
 
