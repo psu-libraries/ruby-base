@@ -26,6 +26,5 @@ jobs:
         name: psul/ruby
         username: ${{ secrets.DOCKER_USER }}
         password: ${{ secrets.DOCKER_TOKEN }}
-        # registry: docker.pkg.github.com
-        tags: "${{ matrix.ruby }}-node-${{ matrix.node }}-${{steps.current-time.outputs.formattedTime"
+        tags: "${{ matrix.ruby }}-node-${{ matrix.node }}-${{steps.current-time.outputs.formattedTime }}"
         buildargs: RUBY_VERSION,NODE_MAJOR
