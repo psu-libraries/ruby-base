@@ -11,6 +11,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Get Time
+      uses: srfrnk/current-time@v1.1.0
+      id: current-time
+      with:
+        format: YYYYMMDD
+
     - uses: actions/checkout@v2
     - uses: elgohr/Publish-Docker-Github-Action@master
       env:
@@ -21,5 +27,5 @@ jobs:
         username: ${{ secrets.DOCKER_USER }}
         password: ${{ secrets.DOCKER_TOKEN }}
         # registry: docker.pkg.github.com
-        tags: "${{ matrix.ruby }}-node-${{ matrix.node }}"
+        tags: "${{ matrix.ruby }}-node-${{ matrix.node }}-${{steps.current-time.outputs.formattedTime"
         buildargs: RUBY_VERSION,NODE_MAJOR
