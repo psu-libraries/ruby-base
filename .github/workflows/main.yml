@@ -23,8 +23,8 @@ jobs:
         RUBY_VERSION: ${{ matrix.ruby }}
         NODE_MAJOR: ${{ matrix.node }}
       with:
-        name: psul/ruby
+        name: psul/ruby-${{matrix.ruby}}-node-${{matrix.node}}
         username: ${{ secrets.DOCKER_USER }}
         password: ${{ secrets.DOCKER_TOKEN }}
-        tags: "${{ matrix.ruby }}-node-${{ matrix.node }}-${{steps.current-time.outputs.formattedTime }}"
+        tags: "${{steps.current-time.outputs.formattedTime }}"
         buildargs: RUBY_VERSION,NODE_MAJOR
