@@ -2,6 +2,7 @@ ARG RUBY_VERSION=2.6.3
 FROM ruby:${RUBY_VERSION}-slim-buster as base
 
 ENV TZ=America/New_York
+ENV UPDATED_ON=20200624
 
 WORKDIR /app
 
