@@ -26,5 +26,5 @@ jobs:
         name: psul/ruby
         username: ${{ secrets.DOCKER_USER }}
         password: ${{ secrets.DOCKER_TOKEN }}
-        tags: "${{steps.current-time.outputs.formattedTime }}-${{ matrix.ruby }}-node-${{ matrix.node }}"
+        tags: "${{ matrix.ruby }}-node-${{ matrix.node }}-${{steps.current-time.outputs.formattedTime }}"
         buildargs: RUBY_VERSION,NODE_MAJOR
