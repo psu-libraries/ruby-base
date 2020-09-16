@@ -1,4 +1,4 @@
-ARG RUBY_VERSION=2.6.3
+ARG RUBY_VERSION=2.7.1
 FROM ruby:${RUBY_VERSION}-slim-buster as base
 
 ENV TZ=America/New_York
