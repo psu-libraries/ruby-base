@@ -7,7 +7,9 @@ orbs:
 jobs:
   build-and-push:
     parameters:
-      version:
+      ruby_version:
+        type: string
+      node_version:
         type: string
     executor: docker/docker
     environment:
