@@ -35,6 +35,10 @@ workflows:
     triggers:
       - schedule:
           cron: '5 19 * * 2'
+          filters:
+            branches:
+              only:
+                - master
     jobs:
       - build-and-push:
           matrix:
