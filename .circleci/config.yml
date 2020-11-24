@@ -34,7 +34,7 @@ workflows:
   docker_push:
     triggers:
       - schedule:
-          cron: '5 9 * * 2'
+          cron: '20 14 * * 2'
           filters:
             branches:
               only:
