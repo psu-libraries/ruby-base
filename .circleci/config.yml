@@ -52,7 +52,7 @@ workflows:
   trivy_check:
     triggers:
       - schedule:
-          cron: '06 4 * * *'
+          cron: '15 4 * * *'
           filters:
             branches:
               only:
