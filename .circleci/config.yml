@@ -34,7 +34,7 @@ jobs:
     docker:
       - image: harbor.k8s.libraries.psu.edu/library/ci-utils:v1.0.11
     environment:
-      REGISTRY_URL: library/bibliographies-base
+      REGISTRY_URL: library/ruby
       DOCKER_LOGIN: 'robot$circleci'
       DOCKER_REGISTRY: 'harbor.k8s.libraries.psu.edu'
     steps:
