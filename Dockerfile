@@ -23,10 +23,10 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends nodejs yarn=${YARN_VERSION}-1 &&  \
     rm -rf /var/lib/apt/lists*
 
-# RUN apt-get update && \
-#     apt-get install -y --no-install-recommends \
-#     git make pkg-config libxslt-dev libxml2-dev g++ libpq-dev libghc-zlib-dev zlib1g-dev &&  \
-#     rm -rf /var/lib/apt/lists*
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    git make pkg-config libxslt-dev libxml2-dev g++ libpq-dev libghc-zlib-dev zlib1g-dev &&  \
+    rm -rf /var/lib/apt/lists*
 
 # Configure bundler
 ENV LANG=C.UTF-8 \
