@@ -73,7 +73,7 @@ workflows:
       - build-and-push:
           matrix:
             parameters:
-              node_version: ['10', '12']
+              node_version: ['12', '14', '15']
               ruby_version: ['2.6.6', '2.7.1', '2.7.2']
           filters:
             branches:
