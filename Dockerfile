@@ -11,7 +11,7 @@ ARG BUNDLER_VERSION=2.0.2
 
 RUN apt-get update && \
     apt-get upgrade -y --no-install-recommends && \
-    apt-get install -y --no-install-recommends curl ssh wget unzip && \
+    apt-get install -y --no-install-recommends curl ssh wget unzip python-dev && \
     rm -rf /var/lib/apt/lists*
 
 RUN curl -sL https://deb.nodesource.com/setup_$NODE_MAJOR.x | bash -
