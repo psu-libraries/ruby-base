@@ -5,12 +5,12 @@ ENV TZ=America/New_York
 
 WORKDIR /app
 
-ARG NODE_MAJOR=12
-ARG YARN_VERSION=1.19.1
+ARG NODE_MAJOR=15
+ARG YARN_VERSION=1.22.10
 ARG BUNDLER_VERSION=2.0.2
 
 RUN apt-get update && \
-    apt-get upgrade -y && \
+    apt-get upgrade -y --no-install-recommends && \
     apt-get install -y --no-install-recommends curl ssh wget unzip && \
     rm -rf /var/lib/apt/lists*
 
@@ -23,14 +23,10 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends nodejs yarn=${YARN_VERSION}-1 &&  \
     rm -rf /var/lib/apt/lists*
 
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
-    git make pkg-config libxslt-dev libxml2-dev g++ libpq-dev libghc-zlib-dev zlib1g-dev &&  \
-    rm -rf /var/lib/apt/lists*
-
-RUN curl -Lo /tmp/envconsul.zip https://releases.hashicorp.com/envconsul/0.9.2/envconsul_0.9.2_linux_amd64.zip && \
-    unzip /tmp/envconsul.zip -d /bin && \
-    rm /tmp/envconsul.zip
+# RUN apt-get update && \
+#     apt-get install -y --no-install-recommends \
+#     git make pkg-config libxslt-dev libxml2-dev g++ libpq-dev libghc-zlib-dev zlib1g-dev &&  \
+#     rm -rf /var/lib/apt/lists*
 
 # Configure bundler
 ENV LANG=C.UTF-8 \
