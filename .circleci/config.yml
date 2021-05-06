@@ -74,7 +74,7 @@ workflows:
           matrix:
             parameters:
               node_version: ['12', '14', '15']
-              ruby_version: ['2.6.6', '2.7.1', '2.7.2']
+              ruby_version: ['2.6.5', '2.6.6', '2.6.7', '2.7.1', '2.7.2']
           filters:
             branches:
               only:
