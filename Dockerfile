@@ -28,6 +28,8 @@ RUN apt-get update && \
     git make pkg-config libxslt-dev libxml2-dev g++ libpq-dev libghc-zlib-dev zlib1g-dev &&  \
     rm -rf /var/lib/apt/lists*
 
+COPY bin/vaultshell /bin
+
 # Configure bundler
 ENV LANG=C.UTF-8 \
   BUNDLE_JOBS=4 \
