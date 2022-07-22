@@ -68,13 +68,13 @@ jobs:
 
 workflows:
   trivy_check:
-    # triggers:
-    #   - schedule:
-    #       cron: '15 4 * * *'
-    #       filters:
-    #         branches:
-    #           only:
-    #             - master
+    triggers:
+      - schedule:
+          cron: '15 4 * * *'
+          filters:
+            branches:
+              only:
+                - master
     jobs:
       - create-db:
           context: org-global
@@ -91,15 +91,15 @@ workflows:
               only:
                 - master
 
-  # build_and_push:
-  #   jobs:
-  #     - build-and-push:
-  #         context: org-global
-  #         matrix:
-  #           parameters:
-  #             node_version: ['12', '15', '16']
-  #             ruby_version: ['2.6.5', '2.7.1', '2.7.3', '2.7.5', '2.7.6', '3.1.2']
-  #         filters:
-  #           branches:
-  #             only:
-  #               - master
+  build_and_push:
+    jobs:
+      - build-and-push:
+          context: org-global
+          matrix:
+            parameters:
+              node_version: ['12', '15', '16']
+              ruby_version: ['2.6.5', '2.7.1', '2.7.3', '2.7.5', '2.7.6', '3.1.2']
+          filters:
+            branches:
+              only:
+                - master
