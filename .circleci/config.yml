@@ -2,6 +2,23 @@ version: 2.1
 
 
 jobs:
+  create-db:
+    docker:
+      - image: ghcr.io/oras-project/oras:v0.13.0
+    environment:
+      REGISTRY_URL: library/ruby
+    steps:
+    - setup_remote_docker
+    - run:
+        name: "Download Trivy DB"
+        command: |
+          mkdir trivy-db
+          oras pull ghcr.io/aquasecurity/trivy-db:2 -a
+          tar -xvf db.tar.gz -C trivy-db
+    - persist_to_workspace:
+        root: trivy-db
+        paths:
+          - "."
   trivy-check:
     parameters:
       ruby_version:
@@ -9,13 +26,16 @@ jobs:
       node_version:
         type: string
     docker:
-      - image: harbor.k8s.libraries.psu.edu/library/ci-utils:$CI_UTILS_IMAGE_TAG
+      - image: harbor.k8s.libraries.psu.edu/library/ci-utils:v3.0.1
     environment:
       REGISTRY_URL: library/ruby
+      TRIVY_CACHE_DIR: trivy-db
       DOCKER_REGISTRY: 'harbor.k8s.libraries.psu.edu'
     steps:
     - setup_remote_docker
     - checkout
+    - attach_workspace:
+        at: trivy-db
     - run:
         name: "trivy"
         command: |
@@ -56,6 +76,8 @@ workflows:
               only:
                 - master
     jobs:
+      - create-db:
+        context: org-global
       - trivy-check:
           context: org-global
           matrix:
