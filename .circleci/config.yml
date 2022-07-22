@@ -79,6 +79,8 @@ workflows:
       - create-db:
           context: org-global
       - trivy-check:
+          requires:
+            - "create-db"
           context: org-global
           matrix:
             parameters:
