@@ -13,7 +13,7 @@ jobs:
         name: "Download Trivy DB"
         command: |
           mkdir trivy-db
-          oras pull ghcr.io/aquasecurity/trivy-db:2 -a
+          oras pull ghcr.io/aquasecurity/trivy-db:2
           tar -xvf db.tar.gz -C trivy-db
     - persist_to_workspace:
         root: trivy-db
