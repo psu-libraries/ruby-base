@@ -7,11 +7,12 @@ WORKDIR /app
 
 ARG NODE_MAJOR=15
 ARG YARN_VERSION=1.22.5
-ARG BUNDLER_VERSION=2.0.2
+ARG BUNDLER_VERSION=2.2.16
+ENV RUBY_BASE_IMAGE=${RUBY_VERSION}-node-${NODE_VERSION}
 
 RUN apt-get update && \
     apt-get upgrade -y --no-install-recommends && \
-    apt-get install -y --no-install-recommends curl ssh wget unzip python-dev && \
+    apt-get install -y --no-install-recommends curl wget unzip && \
     rm -rf /var/lib/apt/lists*
 
 RUN curl -sL https://deb.nodesource.com/setup_$NODE_MAJOR.x | bash -
@@ -27,6 +28,9 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends \
     git make pkg-config libxslt-dev libxml2-dev g++ libpq-dev libghc-zlib-dev zlib1g-dev &&  \
     rm -rf /var/lib/apt/lists*
+
+RUN rm -rf /usr/local/lib/ruby/gems/2.7.0/specifications/default
+
 
 COPY bin/vaultshell /bin
 
