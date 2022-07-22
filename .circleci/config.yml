@@ -77,7 +77,7 @@ workflows:
     #             - master
     jobs:
       - create-db:
-        context: org-global
+          context: org-global
       - trivy-check:
           context: org-global
           matrix:
