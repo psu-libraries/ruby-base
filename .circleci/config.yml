@@ -74,7 +74,7 @@ workflows:
               only:
                 - master
     jobs:
-      - create-db:
+      - create-db
       - trivy-check:
           requires:
             - "create-db"
