@@ -49,7 +49,7 @@ jobs:
       node_version:
         type: string
     docker:
-      - image: harbor.k8s.libraries.psu.edu/library/ci-utils:$CI_UTILS_IMAGE_TAG
+      - image: harbor.k8s.libraries.psu.edu/library/ci-utils:v3.0.2
     environment:
       REGISTRY_URL: psul/ruby
       DOCKER_REGISTRY: 'registry.hub.docker.com'
