@@ -5,8 +5,6 @@ jobs:
   create-db:
     docker:
       - image: ghcr.io/oras-project/oras:v0.13.0
-    environment:
-      REGISTRY_URL: library/ruby
     steps:
     - setup_remote_docker
     - run:
@@ -28,9 +26,9 @@ jobs:
     docker:
       - image: harbor.k8s.libraries.psu.edu/library/ci-utils:v3.0.2
     environment:
-      REGISTRY_URL: library/ruby
+      REGISTRY_URL: psul/ruby
       TRIVY_CACHE_DIR: trivy-db
-      DOCKER_REGISTRY: 'harbor.k8s.libraries.psu.edu'
+      DOCKER_REGISTRY: 'registry.hub.docker.com'
     steps:
     - setup_remote_docker
     - checkout
@@ -53,8 +51,8 @@ jobs:
     docker:
       - image: harbor.k8s.libraries.psu.edu/library/ci-utils:$CI_UTILS_IMAGE_TAG
     environment:
-      REGISTRY_URL: library/ruby
-      DOCKER_REGISTRY: 'harbor.k8s.libraries.psu.edu'
+      REGISTRY_URL: psul/ruby
+      DOCKER_REGISTRY: 'registry.hub.docker.com'
     steps:
     - setup_remote_docker
     - checkout
@@ -77,11 +75,9 @@ workflows:
                 - master
     jobs:
       - create-db:
-          context: org-global
       - trivy-check:
           requires:
             - "create-db"
-          context: org-global
           matrix:
             parameters:
               node_version: ['12', '14', '16', '18']
@@ -90,11 +86,11 @@ workflows:
             branches:
               only:
                 - master
+                - dockerhub
 
   build_and_push:
     jobs:
       - build-and-push:
-          context: org-global
           matrix:
             parameters:
               node_version: ['12', '14', '16', '18']
@@ -103,3 +99,4 @@ workflows:
             branches:
               only:
                 - master
+                - dockerhub
