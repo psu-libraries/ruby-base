@@ -23,6 +23,7 @@ jobs:
         type: string
       node_version:
         type: string
+    parallelism: 3
     docker:
       - image: harbor.k8s.libraries.psu.edu/library/ci-utils:v3.0.2
     environment:
@@ -48,6 +49,7 @@ jobs:
         type: string
       node_version:
         type: string
+    parallelism: 3
     docker:
       - image: harbor.k8s.libraries.psu.edu/library/ci-utils:v3.0.2
     environment:
