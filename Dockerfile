@@ -29,6 +29,12 @@ RUN apt-get update && \
     git make pkg-config libxslt-dev libxml2-dev g++ libpq-dev libghc-zlib-dev zlib1g-dev &&  \
     rm -rf /var/lib/apt/lists*
 
+# Dependencies needed for chrome installation in downstream ruby projects |     gcc-10-base_10-20200411 and libgcc-s1_10-20200411
+RUN wget https://mirrors.edge.kernel.org/ubuntu/pool/main/g/gcc-10/gcc-10-base_10-20200411-0ubuntu1_amd64.deb \
+    && dpkg -i gcc-10-base_10-20200411-0ubuntu1_amd64.deb
+RUN wget https://mirrors.edge.kernel.org/ubuntu/pool/main/g/gcc-10/libgcc-s1_10-20200411-0ubuntu1_amd64.deb \
+    && dpkg -i libgcc-s1_10-20200411-0ubuntu1_amd64.deb
+
 RUN rm -rf /usr/local/lib/ruby/gems/2.7.0/specifications/default
 
 
