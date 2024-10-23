@@ -1,21 +1,21 @@
 ARG RUBY_VERSION=3.1.6
-FROM ruby:${RUBY_VERSION}-slim-bookworm AS base
+FROM ruby:${RUBY_VERSION}-slim-bookworm as base
 
 ENV TZ=America/New_York
 
 WORKDIR /app
 
-ARG NODE_MAJOR=16
+ARG NODE_VERSION=16
 ARG YARN_VERSION=1.22.5
 ARG BUNDLER_VERSION=2.2.16
-ENV RUBY_BASE_IMAGE=${RUBY_VERSION}-node-${NODE_MAJOR}
+ENV RUBY_BASE_IMAGE=${RUBY_VERSION}-node-${NODE_VERSION}
 
 RUN apt-get update && \
     apt-get upgrade -y --no-install-recommends && \
     apt-get install -y --no-install-recommends curl wget unzip && \
     rm -rf /var/lib/apt/lists*
 
-RUN curl -sL https://deb.nodesource.com/setup_$NODE_MAJOR.x | bash -
+RUN curl -sL https://deb.nodesource.com/setup_$NODE_VERSION.x | bash -
 
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -  \
   && echo 'deb http://dl.yarnpkg.com/debian/ stable main' > /etc/apt/sources.list.d/yarn.list
