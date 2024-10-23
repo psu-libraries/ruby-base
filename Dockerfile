@@ -1,14 +1,14 @@
 ARG RUBY_VERSION=3.1.6
-FROM ruby:${RUBY_VERSION}-slim-bookworm as base
+FROM ruby:${RUBY_VERSION}-slim-bookworm AS base
 
 ENV TZ=America/New_York
 
 WORKDIR /app
 
-ARG NODE_MAJOR=20
+ARG NODE_MAJOR=16
 ARG YARN_VERSION=1.22.5
 ARG BUNDLER_VERSION=2.2.16
-ENV RUBY_BASE_IMAGE=${RUBY_VERSION}-node-${NODE_VERSION}
+ENV RUBY_BASE_IMAGE=${RUBY_VERSION}-node-${NODE_MAJOR}
 
 RUN apt-get update && \
     apt-get upgrade -y --no-install-recommends && \
