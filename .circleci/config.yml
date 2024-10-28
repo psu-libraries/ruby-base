@@ -84,7 +84,7 @@ workflows:
           context: org-global
           matrix:
             parameters:
-              node_version: ['20']
+              node_version: ['16', '20']
               ruby_version: ['3.1.6']
           filters:
             branches:
@@ -98,7 +98,7 @@ workflows:
           context: org-global
           matrix:
             parameters:
-              node_version: ['20']
+              node_version: ['16', '20']
               ruby_version: ['3.1.6']
           filters:
             branches:
