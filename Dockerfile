@@ -1,5 +1,5 @@
-ARG RUBY_VERSION=2.7.1
-FROM ruby:${RUBY_VERSION}-slim-buster as base
+ARG RUBY_VERSION=3.3.6
+FROM ruby:${RUBY_VERSION}-slim-bullseye as base
 
 ENV TZ=America/New_York
 
