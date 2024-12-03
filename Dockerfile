@@ -12,23 +12,27 @@ ENV RUBY_BASE_IMAGE=${RUBY_VERSION}-node-${NODE_VERSION}
 
 RUN apt-get update && \
     apt-get upgrade -y --no-install-recommends && \
-    apt-get install -y --no-install-recommends curl wget unzip && \
-    rm -rf /var/lib/apt/lists*
+    apt-get autoremove -y && \
+    apt --fix-broken install -y && \
+    apt-get install -y --no-install-recommends curl wget unzip
 
 RUN curl -sL https://deb.nodesource.com/setup_$NODE_VERSION.x | bash -
 
-RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -  \
-  && echo 'deb http://dl.yarnpkg.com/debian/ stable main' > /etc/apt/sources.list.d/yarn.list
+RUN mkdir -p /etc/apt/keyrings && \
+    curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | gpg --dearmor -o /etc/apt/keyrings/yarn.gpg && \
+    echo 'deb [signed-by=/etc/apt/keyrings/yarn.gpg] http://dl.yarnpkg.com/debian/ stable main' > /etc/apt/sources.list.d/yarn.list
 
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends nodejs yarn=${YARN_VERSION}-1 &&  \
-    rm -rf /var/lib/apt/lists*
+    apt-get install -y --no-install-recommends nodejs yarn=${YARN_VERSION}-1
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
-    git make pkg-config libxslt-dev libxml2-dev g++ libpq-dev libghc-zlib-dev zlib1g-dev &&  \
-    rm -rf /var/lib/apt/lists*
+    git make pkg-config libxslt-dev libxml2-dev g++ libpq-dev libghc-zlib-dev zlib1g-dev
 
+RUN apt --fix-broken install -y
+RUN apt-get autoremove -y
+#RUN apt install rolldice
+# apt list --installed | grep rolldice
 # Dependencies needed for chrome installation in downstream ruby projects |     gcc-10-base_10-20200411 and libgcc-s1_10-20200411
 RUN wget https://mirrors.edge.kernel.org/ubuntu/pool/main/g/gcc-10/gcc-10-base_10-20200411-0ubuntu1_amd64.deb \
     && dpkg -i gcc-10-base_10-20200411-0ubuntu1_amd64.deb
@@ -36,6 +40,7 @@ RUN wget https://mirrors.edge.kernel.org/ubuntu/pool/main/g/gcc-10/libgcc-s1_10-
     && dpkg -i libgcc-s1_10-20200411-0ubuntu1_amd64.deb
 
 RUN rm -rf /usr/local/lib/ruby/gems/2.7.0/specifications/default
+RUN rm -rf /var/lib/apt/lists*
 
 
 COPY bin/vaultshell /bin
