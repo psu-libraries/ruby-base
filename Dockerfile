@@ -29,15 +29,19 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends \
     git make pkg-config libxslt-dev libxml2-dev g++ libpq-dev libghc-zlib-dev zlib1g-dev
 
+ENV DEBIAN_FRONTEND=noninteractive
 RUN apt --fix-broken install -y
 RUN apt-get autoremove -y
+RUN apt --fix-broken install -y
+
 #RUN apt install rolldice
 # apt list --installed | grep rolldice
-# Dependencies needed for chrome installation in downstream ruby projects |     gcc-10-base_10-20200411 and libgcc-s1_10-20200411
-RUN wget https://mirrors.edge.kernel.org/ubuntu/pool/main/g/gcc-10/gcc-10-base_10-20200411-0ubuntu1_amd64.deb \
-    && dpkg -i gcc-10-base_10-20200411-0ubuntu1_amd64.deb
-RUN wget https://mirrors.edge.kernel.org/ubuntu/pool/main/g/gcc-10/libgcc-s1_10-20200411-0ubuntu1_amd64.deb \
-    && dpkg -i libgcc-s1_10-20200411-0ubuntu1_amd64.deb
+# Dependencies needed for chrome installation in downstream ruby projects
+# Current:  gcc-12-base_12-20220319 libgcc-s1_12-20220319  Prior: gcc-10-base_10-20200411 and libgcc-s1_10-20200411
+RUN wget https://mirrors.edge.kernel.org/ubuntu/pool/main/g/gcc-12/gcc-12-base_12-20220319-1ubuntu1_amd64.deb \
+    && dpkg -i gcc-12-base_12-20220319-1ubuntu1_amd64.deb
+RUN wget https://mirrors.edge.kernel.org/ubuntu/pool/main/g/gcc-12/libgcc-s1_12-20220319-1ubuntu1_amd64.deb \
+    && dpkg -i libgcc-s1_12-20220319-1ubuntu1_amd64.deb
 
 RUN rm -rf /usr/local/lib/ruby/gems/2.7.0/specifications/default
 RUN rm -rf /var/lib/apt/lists*
