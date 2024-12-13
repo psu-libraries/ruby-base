@@ -16,7 +16,7 @@ RUN apt-get update && \
     apt --fix-broken install -y && \
     apt-get install -y --no-install-recommends curl wget unzip && \
     apt-get autoremove -y && \
-    apt-get clean && rm -rf /var/lib/apt/lists/*
+    rm -rf /var/lib/apt/lists/*
 
 # Add Node.js repository & Yarn Repositories
 RUN curl -sL https://deb.nodesource.com/setup_$NODE_VERSION.x | bash - && \
@@ -31,13 +31,21 @@ nodejs yarn=${YARN_VERSION}-1 \
 git make pkg-config libxslt-dev libxml2-dev \
 libpq-dev libghc-zlib-dev zlib1g-dev && \
 apt-get autoremove -y && \
-apt-get clean && rm -rf /var/lib/apt/lists/*
+rm -rf /var/lib/apt/lists/*
 
-# # Set up the Chrome repository - Chromie is about 130 mb smaller than chromium
+# Add Google GPG key
+#RUN wget -q -O /etc/apt/trusted.gpg.d/google-linux-signing-key.gpg https://dl.google.com/linux/linux_signing_key.pub
+
+#RUN ​wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | gpg --dearmor -o  /etc/apt/keyrings/google.gpg
+
+###RUN curl -s https://dl-ssl.google.com/linux/linux_signing_key.pub | sh -c 'gpg --dearmor > /usr/share/keyrings/google-chrome-keyring.gpg'
+
+# # Set up the Chrome repository
 RUN echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list && \
 wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | gpg --dearmor |  tee /etc/apt/trusted.gpg.d/google.gpg >/dev/null && \
 # Install Google Chrome https://www.google.com/linuxrepositories/
 apt-get update && apt-get install -y --no-install-recommends google-chrome-stable && \
+# # Clean up
 apt-get clean && rm -rf /var/lib/apt/lists/*
 
 COPY bin/vaultshell /bin
