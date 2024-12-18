@@ -1,4 +1,4 @@
-ARG RUBY_VERSION=3.1.4
+ARG RUBY_VERSION=3.1.6
 FROM ruby:${RUBY_VERSION}-slim-bookworm AS base
 
 ENV TZ=America/New_York
