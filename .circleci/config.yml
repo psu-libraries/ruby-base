@@ -4,7 +4,7 @@ version: 2.1
 jobs:
   create-db:
     docker:
-      - image: ghcr.io/oras-project/oras:v0.13.0
+      - image: ghcr.io/oras-project/oras:v1.2.2
     environment:
       REGISTRY_URL: library/ruby
     steps:
@@ -26,7 +26,7 @@ jobs:
       node_version:
         type: string
     docker:
-      - image: harbor.k8s.libraries.psu.edu/library/ci-utils:v3.0.2
+      - image: harbor.k8s.libraries.psu.edu/library/ci-utils:v4.0.6
     environment:
       REGISTRY_URL: library/ruby
       TRIVY_CACHE_DIR: trivy-db
