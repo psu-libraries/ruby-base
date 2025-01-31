@@ -1,11 +1,11 @@
-ARG RUBY_VERSION=3.3.7
+ARG RUBY_VERSION=3.4.1
 FROM ruby:${RUBY_VERSION}-slim-bookworm AS base
 
 ENV TZ=America/New_York
 
 WORKDIR /app
 
-ARG NODE_VERSION=22
+ARG NODE_VERSION=20
 ARG YARN_VERSION=1.22.22
 # Bundler is based on ruby base image
 ARG BUNDLER_VERSION=2.5.22
