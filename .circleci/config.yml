@@ -1,6 +1,4 @@
 version: 2.1
-
-
 jobs:
   create-db:
     docker:
@@ -8,17 +6,17 @@ jobs:
     environment:
       REGISTRY_URL: library/ruby
     steps:
-    - setup_remote_docker
-    - run:
-        name: "Download Trivy DB"
-        command: |
-          mkdir -p trivy-db/db
-          oras pull ghcr.io/aquasecurity/trivy-db:2
-          tar -xvf db.tar.gz -C trivy-db/db
-    - persist_to_workspace:
-        root: trivy-db
-        paths:
-          - "."
+      - setup_remote_docker
+      - run:
+          name: "Download Trivy DB"
+          command: |
+            mkdir -p trivy-db/db
+            oras pull ghcr.io/aquasecurity/trivy-db:2
+            tar -xvf db.tar.gz -C trivy-db/db
+      - persist_to_workspace:
+          root: trivy-db
+          paths:
+            - "."
   trivy-check:
     parameters:
       ruby_version:
@@ -32,18 +30,17 @@ jobs:
       TRIVY_CACHE_DIR: trivy-db
       DOCKER_REGISTRY: 'harbor.k8s.libraries.psu.edu'
     steps:
-    - setup_remote_docker
-    - checkout
-    - attach_workspace:
-        at: trivy-db
-    - run:
-        name: "trivy"
-        command: |
-          export BUILD_ARGS="--build-arg RUBY_VERSION=<< parameters.ruby_version >> --build-arg NODE_MAJOR=<< parameters.node_version >>"
-          export REGISTRY_IMAGE=$REGISTRY_URL-<< parameters.ruby_version >>-node-<< parameters.node_version >>
-          export IMAGE_TAG="$(date +%Y%m%d),latest"
-          /usr/local/bin/trivy-check
-
+      - setup_remote_docker
+      - checkout
+      - attach_workspace:
+          at: trivy-db
+      - run:
+          name: "trivy"
+          command: |
+            export BUILD_ARGS="--build-arg RUBY_VERSION=<< parameters.ruby_version >> --build-arg NODE_MAJOR=<< parameters.node_version >>"
+            export REGISTRY_IMAGE=$REGISTRY_URL-<< parameters.ruby_version >>-node-<< parameters.node_version >>
+            export IMAGE_TAG="$(date +%Y%m%d),latest"
+            /usr/local/bin/trivy-check
   build-and-push:
     parameters:
       ruby_version:
@@ -56,16 +53,15 @@ jobs:
       REGISTRY_URL: library/ruby
       DOCKER_REGISTRY: 'harbor.k8s.libraries.psu.edu'
     steps:
-    - setup_remote_docker
-    - checkout
-    - run:
-        name: "build and push"
-        command: |
-          export BUILD_ARGS="--build-arg RUBY_VERSION=<< parameters.ruby_version >> --build-arg NODE_MAJOR=<< parameters.node_version >>"
-          export REGISTRY_IMAGE=$REGISTRY_URL-<< parameters.ruby_version >>-node-<< parameters.node_version >>
-          export IMAGE_TAG="$(date +%Y%m%d),latest"
-          /usr/local/bin/build-and-push
-
+      - setup_remote_docker
+      - checkout
+      - run:
+          name: "build and push"
+          command: |
+            export BUILD_ARGS="--build-arg RUBY_VERSION=<< parameters.ruby_version >> --build-arg NODE_MAJOR=<< parameters.node_version >>"
+            export REGISTRY_IMAGE=$REGISTRY_URL-<< parameters.ruby_version >>-node-<< parameters.node_version >>
+            export IMAGE_TAG="$(date +%Y%m%d),latest"
+            /usr/local/bin/build-and-push
 workflows:
   trivy_check:
     triggers:
@@ -91,7 +87,6 @@ workflows:
               only:
                 - master
                 - /preview\/.*/
-
   build_and_push:
     jobs:
       - build-and-push:
