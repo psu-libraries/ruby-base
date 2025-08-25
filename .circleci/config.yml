@@ -80,8 +80,8 @@ workflows:
           context: org-global
           matrix:
             parameters:
-              node_version: ['18']
-              ruby_version: ['3.1.6']
+              node_version: ['22']
+              ruby_version: ['3.4.1']
           filters:
             branches:
               only:
@@ -93,8 +93,8 @@ workflows:
           context: org-global
           matrix:
             parameters:
-              node_version: ['18']
-              ruby_version: ['3.1.6']
+              node_version: ['22']
+              ruby_version: ['3.4.1']
           filters:
             branches:
               only:
