@@ -24,7 +24,7 @@ jobs:
       node_version:
         type: string
     docker:
-      - image: harbor.k8s.libraries.psu.edu/library/ci-utils:v4.0.6
+      - image: harbor.k8s.libraries.psu.edu/library/ci-utils:v4.3.0
     environment:
       REGISTRY_URL: library/ruby
       TRIVY_CACHE_DIR: trivy-db
