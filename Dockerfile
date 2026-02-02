@@ -18,18 +18,18 @@ RUN apt-get update && \
     apt-get autoremove -y && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Add Node.js repository & Yarn Repositories
+# Add Node.js repository
 RUN curl -sL https://deb.nodesource.com/setup_$NODE_VERSION.x | bash - && \
-    mkdir -p /etc/apt/keyrings && \
-    curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | gpg --dearmor -o /etc/apt/keyrings/yarn.gpg && \
-    echo 'deb [signed-by=/etc/apt/keyrings/yarn.gpg] http://dl.yarnpkg.com/debian/ stable main' > /etc/apt/sources.list.d/yarn.list
+    mkdir -p /etc/apt/keyrings
 
-# Install Node.js, Yarn, and build tools
+# Install Node.js and build tools, then pin Yarn via Corepack
 RUN apt-get update && \
 apt-get install -y --no-install-recommends \
-nodejs yarn=${YARN_VERSION}-1 \
+nodejs \
 git make pkg-config libxslt-dev libxml2-dev g++ \
 libpq-dev libghc-zlib-dev zlib1g-dev && \
+corepack enable && \
+corepack prepare yarn@${YARN_VERSION} --activate && \
 apt-get autoremove -y && \
 apt-get clean && rm -rf /var/lib/apt/lists/*
 
