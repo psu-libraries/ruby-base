@@ -5,10 +5,11 @@ ENV TZ=America/New_York
 
 WORKDIR /app
 
-ARG NODE_VERSION=22
+ARG NODE_MAJOR=22
+ARG NODE_VERSION=${NODE_MAJOR}
 ARG YARN_VERSION=1.22.22
 ARG BUNDLER_VERSION=2.6.3
-ENV RUBY_BASE_IMAGE=${RUBY_VERSION}-node-${NODE_VERSION}
+ENV RUBY_BASE_IMAGE=${RUBY_VERSION}-node-${NODE_MAJOR}
 
 RUN apt-get update && \
     apt-get upgrade -y --no-install-recommends && \
@@ -19,7 +20,7 @@ RUN apt-get update && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Add Node.js repository
-RUN curl -sL https://deb.nodesource.com/setup_$NODE_VERSION.x | bash - && \
+RUN curl -sL https://deb.nodesource.com/setup_$NODE_MAJOR.x | bash - && \
     mkdir -p /etc/apt/keyrings
 
 # Install Node.js and build tools, then pin Yarn via Corepack
