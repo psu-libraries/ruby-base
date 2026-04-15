@@ -64,13 +64,6 @@ jobs:
             /usr/local/bin/build-and-push
 workflows:
   trivy_check:
-    triggers:
-      - schedule:
-          cron: '15 4 1 * *'
-          filters:
-            branches:
-              only:
-                - master
     jobs:
       - create-db:
           context: org-global
