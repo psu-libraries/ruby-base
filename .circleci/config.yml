@@ -69,11 +69,11 @@ jobs:
 workflows:
   trivy_check:
     triggers:
-        - schedule:
+      - schedule:
           # Cron fields: <minute> <hour> <day-of-month> <month> <day-of-week>
           # Runs at 04:15 on the 1st day every 2nd month.
           # Months selected by '*/2' in the month field: 1,3,5,7,9,11 (Jan, Mar, May, Jul, Sep, Nov).
-          # Goal is to get dependabot  PR's to keep these images up to date with security updates.
+          # Goal is to get dependabot PRs to keep these images up to date with security updates.
           cron: '15 4 1 */2 *'
           filters:
             branches:
@@ -104,7 +104,7 @@ workflows:
             parameters:
               node_major: ['22']
               ruby_version: ['3.4.9']
-              yarn_version: ['4.16.0', '4.15.0']
+              yarn_version: ['1.22.22', '4.16.0']
           filters:
             branches:
               only:

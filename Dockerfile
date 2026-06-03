@@ -23,16 +23,16 @@ RUN apt-get update && \
 RUN curl -sL https://deb.nodesource.com/setup_$NODE_MAJOR.x | bash - && \
     mkdir -p /etc/apt/keyrings
 
-# Install Node.js and build tools, then pin Yarn v4 via Corepack
+# Install Node.js and build tools, then pin Yarn via Corepack
 RUN apt-get update && \
-apt-get install -y --no-install-recommends \
-nodejs \
-git make pkg-config libxslt-dev libxml2-dev g++ \
-libpq-dev libghc-zlib-dev zlib1g-dev && \
-corepack enable && \
-corepack prepare yarn@${YARN_VERSION} --activate && \
-apt-get autoremove -y && \
-apt-get clean && rm -rf /var/lib/apt/lists/*
+    apt-get install -y --no-install-recommends \
+        nodejs \
+        git make pkg-config libxslt-dev libxml2-dev g++ \
+        libpq-dev libghc-zlib-dev zlib1g-dev && \
+    corepack enable && \
+    corepack prepare yarn@${YARN_VERSION} --activate && \
+    apt-get autoremove -y && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # # Set up the Chrome repository - Chromie is about 130 mb smaller than chromium
 RUN echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list && \
