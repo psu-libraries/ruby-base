@@ -26,7 +26,7 @@ jobs:
       yarn_version:
         type: string
     docker:
-      - image: harbor.k8s.libraries.psu.edu/library/ci-utils:v4.6.1
+      - image: harbor.k8s.libraries.psu.edu/library/ci-utils:v4.6.4
     environment:
       REGISTRY_URL: library/ruby
       TRIVY_CACHE_DIR: trivy-db
