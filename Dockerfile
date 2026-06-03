@@ -7,7 +7,7 @@ WORKDIR /app
 
 ARG NODE_MAJOR=22
 ARG NODE_VERSION=${NODE_MAJOR}
-ARG YARN_VERSION=1.22.22
+ARG YARN_VERSION=4.16.0
 ARG BUNDLER_VERSION=2.6.3
 ENV RUBY_BASE_IMAGE=${RUBY_VERSION}-node-${NODE_MAJOR}
 
@@ -23,7 +23,7 @@ RUN apt-get update && \
 RUN curl -sL https://deb.nodesource.com/setup_$NODE_MAJOR.x | bash - && \
     mkdir -p /etc/apt/keyrings
 
-# Install Node.js and build tools, then pin Yarn via Corepack
+# Install Node.js and build tools, then pin Yarn v4 via Corepack
 RUN apt-get update && \
 apt-get install -y --no-install-recommends \
 nodejs \
