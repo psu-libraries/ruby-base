@@ -23,8 +23,10 @@ jobs:
         type: string
       node_major:
         type: string
+      yarn_version:
+        type: string
     docker:
-      - image: harbor.k8s.libraries.psu.edu/library/ci-utils:v4.6.1
+      - image: harbor.k8s.libraries.psu.edu/library/ci-utils:v4.6.4
     environment:
       REGISTRY_URL: library/ruby
       TRIVY_CACHE_DIR: trivy-db
@@ -37,8 +39,8 @@ jobs:
       - run:
           name: "trivy"
           command: |
-            export BUILD_ARGS="--build-arg RUBY_VERSION=<< parameters.ruby_version >> --build-arg NODE_MAJOR=<< parameters.node_major >>"
-            export REGISTRY_IMAGE=$REGISTRY_URL-<< parameters.ruby_version >>-node-<< parameters.node_major >>
+            export BUILD_ARGS="--build-arg RUBY_VERSION=<< parameters.ruby_version >> --build-arg NODE_MAJOR=<< parameters.node_major >> --build-arg YARN_VERSION=<< parameters.yarn_version >>"
+            export REGISTRY_IMAGE=$REGISTRY_URL-<< parameters.ruby_version >>-node-<< parameters.node_major >>-yarn-<< parameters.yarn_version >>
             export IMAGE_TAG="$(date +%Y%m%d),latest"
             /usr/local/bin/trivy-check
   build-and-push:
@@ -46,6 +48,8 @@ jobs:
       ruby_version:
         type: string
       node_major:
+        type: string
+      yarn_version:
         type: string
     docker:
       - image: harbor.k8s.libraries.psu.edu/library/ci-utils:$CI_UTILS_IMAGE_TAG
@@ -58,12 +62,23 @@ jobs:
       - run:
           name: "build and push"
           command: |
-            export BUILD_ARGS="--build-arg RUBY_VERSION=<< parameters.ruby_version >> --build-arg NODE_MAJOR=<< parameters.node_major >>"
-            export REGISTRY_IMAGE=$REGISTRY_URL-<< parameters.ruby_version >>-node-<< parameters.node_major >>
+            export BUILD_ARGS="--build-arg RUBY_VERSION=<< parameters.ruby_version >> --build-arg NODE_MAJOR=<< parameters.node_major >> --build-arg YARN_VERSION=<< parameters.yarn_version >>"
+            export REGISTRY_IMAGE=$REGISTRY_URL-<< parameters.ruby_version >>-node-<< parameters.node_major >>-yarn-<< parameters.yarn_version >>
             export IMAGE_TAG="$(date +%Y%m%d),latest"
             /usr/local/bin/build-and-push
 workflows:
   trivy_check:
+    triggers:
+      - schedule:
+          # Cron fields: <minute> <hour> <day-of-month> <month> <day-of-week>
+          # Runs at 04:15 on the 1st day every 2nd month.
+          # Months selected by '*/2' in the month field: 1,3,5,7,9,11 (Jan, Mar, May, Jul, Sep, Nov).
+          # Goal is to get dependabot PRs to keep these images up to date with security updates.
+          cron: '15 4 1 */2 *'
+          filters:
+            branches:
+              only:
+                - master
     jobs:
       - create-db:
           context: org-global
@@ -75,6 +90,7 @@ workflows:
             parameters:
               node_major: ['22']
               ruby_version: ['3.4.9']
+              yarn_version: ['1.22.22', '4.16.0']
           filters:
             branches:
               only:
@@ -88,6 +104,7 @@ workflows:
             parameters:
               node_major: ['22']
               ruby_version: ['3.4.9']
+              yarn_version: ['1.22.22', '4.16.0']
           filters:
             branches:
               only:
