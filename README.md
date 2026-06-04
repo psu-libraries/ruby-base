@@ -1,6 +1,10 @@
 # Building the Docker file locally:
 ```bash
 docker build -t ruby-base .
+docker run -it ruby-base /bin/bash
+
+Specific versions
+ docker build --build-arg RUBY_VERSION=3.4.9 --build-arg NODE_MAJOR=22 --build-arg YARN_VERSION=4.16.0 -t library/ruby-3.4.9-node-22-yarn-4.16.0 .
 ```
 
 # Publishing a new image for other apps to use:
