@@ -2,7 +2,7 @@ version: 2.1
 jobs:
   create-db:
     docker:
-      - image: ghcr.io/oras-project/oras:v1.2.2
+      - image: ghcr.io/oras-project/oras:v1.3.3
     environment:
       REGISTRY_URL: library/ruby
     steps:
@@ -26,11 +26,11 @@ jobs:
       yarn_version:
         type: string
     docker:
-      - image: harbor.k8s.libraries.psu.edu/library/ci-utils:v4.6.4
+      - image: harbor.libraries.psu.edu/library/ci-utils:v4.6.6
     environment:
       REGISTRY_URL: library/ruby
       TRIVY_CACHE_DIR: trivy-db
-      DOCKER_REGISTRY: 'harbor.k8s.libraries.psu.edu'
+      DOCKER_REGISTRY: 'harbor.libraries.psu.edu'
     steps:
       - setup_remote_docker
       - checkout
@@ -52,10 +52,10 @@ jobs:
       yarn_version:
         type: string
     docker:
-      - image: harbor.k8s.libraries.psu.edu/library/ci-utils:$CI_UTILS_IMAGE_TAG
+      - image: harbor.libraries.psu.edu/library/ci-utils:$CI_UTILS_IMAGE_TAG
     environment:
       REGISTRY_URL: library/ruby
-      DOCKER_REGISTRY: 'harbor.k8s.libraries.psu.edu'
+      DOCKER_REGISTRY: 'harbor.libraries.psu.edu'
     steps:
       - setup_remote_docker
       - checkout
@@ -89,8 +89,8 @@ workflows:
           matrix:
             parameters:
               node_major: ['22']
-              ruby_version: ['3.4.9']
-              yarn_version: ['1.22.22', '4.16.0']
+              ruby_version: ['3.4.11']
+              yarn_version: ['1.22.22', '4.18.1']
           filters:
             branches:
               only:
@@ -103,8 +103,8 @@ workflows:
           matrix:
             parameters:
               node_major: ['22']
-              ruby_version: ['3.4.9']
-              yarn_version: ['1.22.22', '4.16.0']
+              ruby_version: ['3.4.11']
+              yarn_version: ['1.22.22', '4.18.1']
           filters:
             branches:
               only:
