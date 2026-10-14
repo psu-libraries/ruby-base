@@ -8,7 +8,6 @@ WORKDIR /app
 ARG NODE_MAJOR=22
 ARG NODE_VERSION=${NODE_MAJOR}
 ARG YARN_VERSION=4.18.1
-ARG BUNDLER_VERSION=4.0.22
 ENV RUBY_BASE_IMAGE=${RUBY_VERSION}-node-${NODE_MAJOR}
 
 RUN apt-get update && \
@@ -47,10 +46,6 @@ COPY bin/vaultshell /bin
 ENV LANG=C.UTF-8 \
     BUNDLE_JOBS=4 \
     BUNDLE_RETRY=3
-
-# Install specified Bundler version
-RUN gem install bundler -v ${BUNDLER_VERSION} --no-document && \
-    bundle -v
 
 # Remove unused default gems (adjust the Ruby version directory if needed)
 RUN rm -rf /usr/local/lib/ruby/gems/3.1.0/specifications/default
